@@ -13,7 +13,7 @@ Additionally, Discord.js v13 is used, which can be found [here at their official
 ## Features
 
 - Team roster management
-  > Intuitive way to manage team rosters, along with league administrators being able to impose limits on the amount of main and substitute players allowed in the team roster based on the league rules.
+  > Intuitive way to manage team rosters with the `/roster ...` command group, along with league administrators being able to impose limits on the amount of main and substitute players allowed in the team roster based on the league rules.
 - Custom news-feed
   > Dynamic dropdown menus to choose which notifications users wish to receive by assigning roles to their user profile. Additionally, these menus are dynamic in which they can be easily changed by modifying the respective JSON file storing the data for each option.
 - Administrative functions
