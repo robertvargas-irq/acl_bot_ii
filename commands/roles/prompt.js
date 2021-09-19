@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType: dTypes } = require('discord-api-types/v9');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { Ranks, Notifications } = require('./ignore.embeds.js');
+const { Ranks, Notifications } = require('./helper/embeds.js');
 
 module.exports = {
     name: 'prompt',

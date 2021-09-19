@@ -19,7 +19,7 @@ async function start( client ) {
             console.log('GUILDID: [' + GUILD_ID + '] Started refreshing application (/) commands.');
             await client.guilds.cache.get(GUILD_ID)?.commands.set(commands);
             await rest.put(
-                Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
+                Routes.applicationGuildCommands( CLIENT_ID, GUILD_ID ),
                 { body: commands },
             );
             console.log('Successfully reloaded application (/) commands.');

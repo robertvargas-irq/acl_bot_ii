@@ -1,3 +1,6 @@
+/**
+ * On interaction receive, parse and route command to respective file in ./commands
+ */
 module.exports = {
     name: 'interactionCreate',
     async execute( interaction ) {

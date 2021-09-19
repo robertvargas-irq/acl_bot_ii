@@ -1,7 +1,10 @@
+/**
+ * When Bot is online, set status and log to console
+ */
 module.exports = {
     name: 'ready',
     once: true,
-    execute(client) {
+    execute( client ) {
         client.user.setPresence({
             activities: [
                 {

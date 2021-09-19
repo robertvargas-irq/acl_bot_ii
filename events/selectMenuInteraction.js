@@ -1,6 +1,8 @@
+/**
+ * Filter and parse interactions with Discord Select Menus
+ */
 const { MessageEmbed } = require('discord.js');
 const { fetchServerData } = require('../helper/serverData.js');
-
 module.exports = {
     name: 'interactionCreate',
     async execute( interaction ) {

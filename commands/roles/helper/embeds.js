@@ -1,5 +1,5 @@
 const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require("discord.js");
-const { fetchServerData } = require('../../helper/serverData.js');
+const { fetchServerData } = require('../../../helper/serverData.js');
 
 function Ranks( serverId ) {
     const colors = fetchServerData( serverId, 'colors' );
