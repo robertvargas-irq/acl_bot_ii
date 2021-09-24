@@ -1,6 +1,8 @@
 /**
  * On interaction receive, parse and route command to respective file in ./commands
  */
+const fs = require('fs');
+
 module.exports = {
     name: 'interactionCreate',
     async execute( interaction ) {
@@ -12,7 +14,9 @@ module.exports = {
         console.log({
             commandName: interaction.commandName,
             commandId: interaction.commandId,
-            calledBy: interaction.user.tag + ' (' + interaction.user.id + ')',
+            calledBy: ( interaction.commandName == 'feedback' )
+                ? '# Anonymized #'
+                : interaction.user.tag + ' (' + interaction.user.id + ')',
         });
         
         // execute command
@@ -24,10 +28,9 @@ module.exports = {
 
             const write = fs.createWriteStream( `./logs/Error Log - ${Date().replace(/:/g, "-")}.txt` );
             write.write( `${Date()}\n\n`
-                + `Command: ${command.name}\n`
-                + `Full: ${command.name} ${args.join(' ')}\n`
-                + `Guild: ${message.guild.name} (${message.guild.id})\n`
-                + `Caller: ${message.author.tag} (${message.author.id})\n`
+                + `Command: ${interaction.commandName}\n`
+                + `Guild: ${interaction.guild.name} (${interaction.guild.id})\n`
+                + `Caller: ${interaction.user.tag} (${interaction.user.id})\n`
                 + `${error.stack}` );
             write.close();
 

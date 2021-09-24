@@ -25,6 +25,7 @@ module.exports = {
                     welcomeBanner: null,
                     negative: null,
                     positive: null,
+                    neutral: null,
                     welcomeBanner: null,
                     leaveBanner: null,
                     rosterAdd: null,
@@ -96,9 +97,9 @@ module.exports = {
             fs.mkdirSync(`./servers/${guild.id}/teams`);
             fs.mkdirSync(`./servers/${guild.id}/users`);
             fs.mkdirSync(`./servers/${guild.id}/data`);
-            dataTemplates.forEach( async folder => {
-                fs.writeFileSync(`./servers/${guild.id}/data/${folder.name}.json`,
-                    JSON.stringify( folder.data, null, 4 ));
+            dataTemplates.forEach( async template => {
+                fs.writeFileSync(`./servers/${guild.id}/data/${template.name}.json`,
+                    JSON.stringify( template.data, null, 4 ));
             });
         }
         catch ( error ) {

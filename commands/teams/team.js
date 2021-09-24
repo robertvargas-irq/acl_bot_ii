@@ -1,14 +1,13 @@
 const { ApplicationCommandOptionType: dTypes, ChannelType } = require('discord-api-types/v9');
-const { MessageEmbed, Permissions, Channel, Message } = require('discord.js');
+const { Permissions } = require('discord.js');
 const { fetchServerData } = require('../../helper/serverData.js');
 const { fetchTeamData, writeTeamData } = require('../../helper/teamData.js');
 const fs = require('fs');
-const roster = require('../roster/roster.js');
 
 module.exports = {
     name: 'team',
     description: 'Team options.',
-    default_permission: false,
+    default_permission: true,
     options: [
         {
             name: 'create',
@@ -77,6 +76,9 @@ module.exports = {
 
         // driver
         await interaction.deferReply({ ephemeral: true });
+        if ( interaction.user.id != process.env.OWNER_ID )
+            return interaction.editReply({ content: 'This user is not authorized to use this command.' });
+
         switch ( action ) {
             case 'create':
                 return create();
@@ -90,7 +92,7 @@ module.exports = {
         async function create() {
 
             if ( interaction.guild.roles.cache.find(
-                role => role.name.toLowerCase().includes( name.toLowerCase() )
+                role => role.name.toLowerCase().trim() == ( name.toLowerCase().trim() )
             ) )
                 return interaction.editReply({ content: 'That team already exists!' });
 

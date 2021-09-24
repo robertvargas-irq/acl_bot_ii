@@ -9,21 +9,21 @@ const fullPermissions = [
     //         permission: true,
     //     }],
     // },
-    // {
-    //     id: '874809520973557792', // team
-    //     permissions: [{
-    //         id: ADMIN_ID,
-    //         type: 1,
-    //         permission: true,
-    //     }],
-    // },
+    {
+        id: '889650369104318508', // team
+        permissions: [{
+            id: OWNER_ID,
+            type: 2,
+            permission: true,
+        }],
+    },
 ];
 
 async function register( client, guildId ) {
     console.log('Registering (/) permissions.');
     try {
         console.log( await client.guilds.cache.get(guildId)?.commands.permissions.set({ fullPermissions }) );
-        console.log('Successfully registered (/) permissions.');
+        console.log('Successfully registered (/) permissions for ' + guildId);
     }
     catch (error) {
         console.error('Unable to register (/) permissions.\n' + error);

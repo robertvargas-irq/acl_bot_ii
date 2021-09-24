@@ -85,7 +85,9 @@ module.exports = {
     ],
     async execute( interaction ) {
         await interaction.deferReply({ ephemeral: true });
-
+        if ( interaction.user.id != process.env.OWNER_ID )
+            return interaction.editReply({ content: 'This user is not authorized to use this command.' });
+        
         const colors = fetchServerData( interaction.guildId, 'colors' );
         const route = interaction.options.getSubcommandGroup();
         const routeTarget = interaction.options.getSubcommand();
@@ -103,13 +105,13 @@ module.exports = {
             
         // collect announcement and parse
         async function collect() {
-            return await interaction.channel.awaitMessages({ messageFilter, max: 1, time: 60 * 1000, errors: ['time'] });
+            return await interaction.channel.awaitMessages({ messageFilter, max: 1, time: 5 * 1000 });
         }
         await interaction.editReply({ content: '⚠️ Please send your announcement within 60 seconds.\nSend `cancel` to cancel.' });
         
         announcement = await collect();
-        if ( !announcement )
-            return interaction.editReply({ content: 'Time\'s up! Please try again!\nTip: Write out your announcement first then copy-paste into this command!'});
+        if ( announcement.content.length < 1 )
+            return await interaction.editReply({ content: 'Time\'s up! Please try again!\nTip: Write out your announcement first then copy-paste into this command!'});
         announcement.first().delete();
         announcement = announcement.first().content;
 
@@ -125,10 +127,10 @@ module.exports = {
         // provide preview
         interaction.editReply({ content: 'Is this correct? `yes / no`', embeds: [ embed ] });
         preview = await collect();
-        preview.first().delete();
         preview = preview.first().content;
         if ( preview.toLowerCase() !== 'yes' )
             return interaction.editReply({ content: '✅ Canceled!' });
+        preview.first().delete();
 
         // prep route
         switch ( route ) {

@@ -24,6 +24,8 @@ Additionally, Discord.js v13 is used, which can be found [here at their official
   > Team data is stored in each individual server by unique Discord server ID, allowing for dynamic expansion beyond the original intent, allowing for the bot to be deployed in other environments if the project were to ever go public to allow other leagues to take advantage of the features "CLN-C" has to offer.
   > User data is stored in the same manner, and allows for flexibility.
   > Both types of data streamline the process of adding new features as each user and team gets their own data stored, which leaves the door open to new features down the line.
+- Chat filter.
+  > Keep the feed clean with a simple, yet intuitive chat filter!
 
 ---
 
@@ -39,7 +41,6 @@ Additionally, Discord.js v13 is used, which can be found [here at their official
   > - Challenge-based score system
 - Administrative commands to moderate chat and behavior.
 - Monitoring of chat data to see which parts of the server are most active, and what can be removed.
-- Chat filter.
 
 ---
 

@@ -77,7 +77,8 @@ module.exports = {
         };
 
         // give welcome roles and write to server
-        member.roles.add( roles.verified );
+        if ( roles.verified )
+            member.roles.add( roles.verified );
         try {
             fs.writeFileSync(`./servers/${member.guild.id}/users/${member.user.id}.json`,
                 JSON.stringify( userDataTemplate, null, 4 ));

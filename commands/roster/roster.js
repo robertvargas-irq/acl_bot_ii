@@ -109,6 +109,9 @@ module.exports = {
     ],
     async execute( interaction ) {
         await interaction.deferReply({ ephemeral: true });
+
+        if ( interaction.user.id != process.env.OWNER_ID )
+            return interaction.editReply({ content: 'This user is not authorized to use this command.' });
         
         // get variables
         const colors = await fetchServerData( interaction.guildId, 'colors' );
@@ -167,6 +170,8 @@ module.exports = {
         else if ( team.position > Marker_QF ) teamType = 'CL';
         else if ( team.position > Marker_END ) teamType = 'QF';
         else return await deny( team.name + ' is not a valid team!' );
+        if ( !fetchTeamData( interaction.guild.id, team.id ) ) return await deny( team.name + ' is not a valid team as '
+            + 'they do not have a valid data file! Please contact your administrators if this is a mistake!');
 
         // pull teamData
         const teamData = await fetchTeamData( interaction.guildId, team.id );
@@ -307,7 +312,7 @@ module.exports = {
                     let mainList;
                     if ( teamData.roster.main.length > 0 ) {
                         mainList = teamData.roster.main.map( p => 
-                            `**⋅ ${interaction.guild.members.cache.get(p.id)?.user.username}**\n> __Tag__: (<@${p.id}>)\n> __Status__: ${fetchTimeLeft( p )
+                            `**⋅ ${interaction.guild.members.cache.get(p.id)?.user.tag}**\n> __Tag__: (<@${p.id}>)\n> __Status__: ${fetchTimeLeft( p )
                             }`).join('\n\n');
                         }
                     else
@@ -321,9 +326,11 @@ module.exports = {
                     }
                     else
                         substituteList = '> **Empty!**';
+
+                    // FIXME: ERROR IN FETCHING MEMBER OBJECT
                     successEmbed
-                        .setTitle( `<${teamData.emojiId || ':role_siege:760240805754961981'}>` + teamData.name + '\'s Roster' +
-                            (teamData.captain ? ` - Captained by: ${interaction.guild.members.cache.get(teamData.captain?.id).user.username}` : '') )
+                        .setTitle( /*`<${teamData.emojiId || ':role_siege:760240805754961981'}> ` +*/ '💾 ' + teamData.name + '\'s Roster' )//+
+                            //(teamData.captain ? ` - Captained by: <@${teamData.captain?.id}> ${interaction.guild.members.cache.get(teamData.captain?.id)?.user.username}` : '') )
                         .setFields(
                             { name: `__📋≫ Main roster__`, value: mainList, inline: true },
                             { name: `__📋≫ Substitute roster__`, value: substituteList, inline: true },
@@ -331,8 +338,8 @@ module.exports = {
                     interaction.editReply({ embeds: [ successEmbed ] });
             }
         }
-        catch (error) {
-            console.log(error);
+        catch ( error ) {
+            console.log( error );
             interaction.editReply({ content: 'Something went wrong, unable to perform action.\n' + error });
         }
 
@@ -354,7 +361,7 @@ module.exports = {
             let timePassed = Date.now() - memberObject.added;
             let timeLeft = dayLength - timePassed;
             if ( timeLeft <= 0 )
-                return '**[💠] Valorant-ready!**';
+                return '**[💠] Siege-ready!**';//Valorant-ready!**';
             else
                 return `**[⏳] ${Math.floor(timeLeft / 1000 / 60 / 60)} hours to go!**`; 
                 // \`<t:${eligibleTime}>, <t:${eligibleTime}:R>`;

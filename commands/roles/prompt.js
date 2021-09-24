@@ -25,6 +25,9 @@ module.exports = {
         },
     ],
     async execute( interaction ) {
+        if ( interaction.user.id != process.env.OWNER_ID )
+            return interaction.editReply({ content: 'This user is not authorized to use this command.' });
+
         const choice = interaction.options.getString('type');
         console.log(choice);
 
