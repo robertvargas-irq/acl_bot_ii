@@ -14,6 +14,7 @@ module.exports = {
         // execute selectMenu
         try {
             const id = interaction.customId;
+            console.log({ selectMenuId: interaction.customId, caller: interaction.user.tag })
             switch( id.slice( id.indexOf('_') + 1 ) ) {
                 case 'rank':
                     return rank();
