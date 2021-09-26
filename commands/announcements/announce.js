@@ -5,6 +5,7 @@ const { fetchTeamData, writeTeamData } = require('../../helper/teamData.js');
 const fs = require('fs');
 
 // id: 875550446629048370
+const PERM_FLAG = '🔏🛑 BOT AUTHOR ONLY: ';
 module.exports = {
     name: 'announce',
     description: 'Send an announcement out via DM or channel.',
@@ -18,7 +19,7 @@ module.exports = {
                 {
                     name: 'role',
                     type: dTypes.Subcommand,
-                    description: 'Announce to everyone with a specific role.',
+                    description: PERM_FLAG + 'Announce to everyone with a specific role.',
                     options: [
                         {
                             name: 'role',
@@ -31,7 +32,7 @@ module.exports = {
                 {
                     name: 'user',
                     type: dTypes.Subcommand,
-                    description: 'Announce to this specific user. **Note: your username will be sent.**',
+                    description: PERM_FLAG + 'Announce to this specific user. **Note: your username will be sent.**',
                     options: [
                         {
                             name: 'user',
@@ -51,7 +52,7 @@ module.exports = {
                 {
                     name: 'team',
                     type: dTypes.Subcommand,
-                    description: 'Announce to this team\'s chat channel.',
+                    description: PERM_FLAG + 'Announce to this team\'s chat channel.',
                     options: [
                         {
                             name: 'team',
@@ -64,7 +65,7 @@ module.exports = {
                 {
                     name: 'channel',
                     type: dTypes.Subcommand,
-                    description: 'Announce to this specific channel.',
+                    description: PERM_FLAG + 'Announce to this specific channel.',
                     options: [
                         {
                             name: 'channel',
@@ -85,6 +86,7 @@ module.exports = {
     ],
     async execute( interaction ) {
         await interaction.deferReply({ ephemeral: true });
+
         if ( interaction.user.id != process.env.OWNER_ID )
             return interaction.editReply({ content: 'This user is not authorized to use this command.' });
         

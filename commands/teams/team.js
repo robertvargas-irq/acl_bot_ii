@@ -4,6 +4,7 @@ const { fetchServerData } = require('../../helper/serverData.js');
 const { fetchTeamData, writeTeamData } = require('../../helper/teamData.js');
 const fs = require('fs');
 
+const PERM_FLAG = '🔏🛑 BOT AUTHOR ONLY: ';
 module.exports = {
     name: 'team',
     description: 'Team options.',
@@ -12,7 +13,7 @@ module.exports = {
         {
             name: 'create',
             type: dTypes.Subcommand,
-            description: 'Create a new team',
+            description: PERM_FLAG + 'Create a new team',
             options: [
                 {
                     name: 'name',
@@ -30,7 +31,7 @@ module.exports = {
                 {
                     name: 'name',
                     type: dTypes.Subcommand,
-                    description: 'Set team name.',
+                    description: PERM_FLAG + 'Set team name.',
                     options: [
                         {
                             name: 'team',
@@ -51,7 +52,7 @@ module.exports = {
         {
             name: 'delete',
             type: dTypes.Subcommand,
-            description: '🔏 Owner only: Permanently delete an existing team.',
+            description: PERM_FLAG + 'Permanently delete an existing team.',
             options: [
                 {
                     name: 'team',

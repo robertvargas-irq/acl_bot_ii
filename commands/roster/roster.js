@@ -6,6 +6,7 @@ const MAX_MAIN = 5;
 const MAX_SUBS = 3;
 const MAX_CAPTAIN = 1;
 
+const PERM_FLAG = '🔏🛑 BOT AUTHOR ONLY: ';
 module.exports = {
     name: 'roster',
     description: 'Edit your team roster.',
@@ -18,7 +19,7 @@ module.exports = {
                 {
                     name: 'main',
                     type: dTypes.Subcommand,
-                    description: 'Add a player to your main roster.',
+                    description: PERM_FLAG + 'Add a player to your main roster.',
                     options: [
                         {
                             name: 'user',
@@ -37,7 +38,7 @@ module.exports = {
                 {
                     name: 'substitute',
                     type: dTypes.Subcommand,
-                    description: 'Add a player to your substitute roster.',
+                    description: PERM_FLAG + 'Add a player to your substitute roster.',
                     options: [
                         {
                             name: 'user',
@@ -56,7 +57,7 @@ module.exports = {
                 {
                     name: 'captain',
                     type: dTypes.Subcommand,
-                    description: 'The player to be your team captain.',
+                    description: PERM_FLAG + 'The player to be your team captain.',
                     options: [
                         {
                             name: 'user',
@@ -77,7 +78,7 @@ module.exports = {
         {
             name: 'remove',
             type: dTypes.Subcommand,
-            description: 'Remove a teammate from your roster.',
+            description: PERM_FLAG + 'Remove a teammate from your roster.',
             options: [
                 {
                     name: 'user',
@@ -96,7 +97,7 @@ module.exports = {
         {
             name: 'list',
             type: dTypes.Subcommand,
-            description: 'List a team\'s competitive roster!',
+            description: PERM_FLAG + 'List a team\'s competitive roster!',
             options: [
                 {
                     name: 'team',

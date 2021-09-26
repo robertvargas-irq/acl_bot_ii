@@ -4,7 +4,7 @@ const { Ranks, Notifications } = require('./helper/embeds.js');
 
 module.exports = {
     name: 'prompt',
-    description: 'Prompt role-pickers.',
+    description: '🔏🛑 BOT AUTHOR ONLY: Prompt role-pickers.',
     default_permission: true,
     options: [
         {

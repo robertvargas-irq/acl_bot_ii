@@ -5,7 +5,7 @@ var currentlyWriting = new Set();
 
 module.exports = {
     name: 'feedback',
-    description: 'Provide fully anonymous feedback, which will be posted anonymously in #anonymous-feedback.',
+    description: '🟢 ALL: Provide fully anonymous feedback, which will be posted anonymously in #anonymous-feedback.',
     default_permission: true,
     options: [],
     async execute( interaction ) {
