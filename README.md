@@ -26,6 +26,8 @@ Additionally, Discord.js v13 is used, which can be found [here at their official
   > Both types of data streamline the process of adding new features as each user and team gets their own data stored, which leaves the door open to new features down the line.
 - Chat filter.
   > Keep the feed clean with a simple, yet intuitive chat filter!
+- Administrative commands to moderate chat and behavior.
+  > Mute, unmute, or enable slowmode on the fly!
 
 ---
 
@@ -39,7 +41,6 @@ Additionally, Discord.js v13 is used, which can be found [here at their official
   > - Trading system of player cards
   > - Chat-based score system
   > - Challenge-based score system
-- Administrative commands to moderate chat and behavior.
 - Monitoring of chat data to see which parts of the server are most active, and what can be removed.
 
 ---
