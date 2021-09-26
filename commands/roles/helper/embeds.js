@@ -7,8 +7,8 @@ function Ranks( serverId ) {
     const embed = new MessageEmbed()
         .setColor( colors.neutral )
         .setTitle('🧧 In-Game Ranking')
-        .setDescription('⩥ __Iron? Platinum? Even Radiant, we have you covered.__')
-        .setImage('https://i.imgur.com/h5C7LrS.jpg');
+        .setDescription('⩥ __Iron? Platinum? Even Diamond, we have you covered.__')
+        .setImage( ranks.bannerLink );
 
     function populateRanks() {
         let components = [];
@@ -41,9 +41,9 @@ function Notifications( serverId ) {
     const notifications = fetchServerData( serverId, 'notifications' );
     const embed = new MessageEmbed()
         .setColor( colors.neutral )
-        .setTitle('🧧 Welcome, Valorant')
+        .setTitle('🧧 Welcome, operator')
         .setDescription('⩥ __Declutter your stay with custom pings.__')
-        .setImage('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt79971d6ef53d8a5f/5e8cdeaa07387e0c9bfff0c5/IMAGE_4.jpg');
+        .setImage( notifications.bannerLink || null );
 
 
     function populateNotifications() {
