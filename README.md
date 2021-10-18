@@ -1,5 +1,4 @@
 # Independent Valorant League Discord Bot – "CLN-C"
-<img src="https://media.discordapp.net/attachments/759841406444371978/827004171822694440/Ascension_plain_Banner.png?width=2160&height=720" alt="Logo for Ascension League">
 
 ## Brief overview
 This project is an updated version of the now-deprecated Independent Valorant eSports League Discord Bot for the Discord server and professional Valorant league by the name of `[Name Change Pending]`.
