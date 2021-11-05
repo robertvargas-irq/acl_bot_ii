@@ -97,19 +97,25 @@ module.exports = {
         {
             name: 'list',
             type: dTypes.Subcommand,
-            description: PERM_FLAG + 'List a team\'s competitive roster!',
+            description: '🟢 ALL: List a team\'s competitive roster!',
             options: [
                 {
                     name: 'team',
                     type: dTypes.Role,
-                    description: '*Useful for Administrative Officers.',
+                    description: 'The team\'s roster you would like to see.',
                     required: true,
+                },
+                {
+                    name: 'display_public',
+                    type: dTypes.Boolean,
+                    description: 'Display the roster publicly in a Discord message (true)? Or private ephemeral message (default)?',
+                    required: false,
                 },
             ],
         },
     ],
     async execute( interaction ) {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: !interaction.options.getBoolean('display_public') });
 
         if ( interaction.user.id != process.env.OWNER_ID )
             return interaction.editReply({ content: 'This user is not authorized to use this command.' });
@@ -313,7 +319,9 @@ module.exports = {
                     let mainList;
                     if ( teamData.roster.main.length > 0 ) {
                         mainList = teamData.roster.main.map( p => 
-                            `**⋅ ${interaction.guild.members.cache.get(p.id)?.user.tag}**\n> __Tag__: (<@${p.id}>)\n> __Status__: ${fetchTimeLeft( p )
+                            // `**⋅ ${interaction.guild.members.cache.get(p.id)}**\n> __Tag__: (<@${p.id}>)\n> __Status__: ${fetchTimeLeft( p )
+                            // }`).join('\n\n');
+                            `**⋅** <@${p.id}>\n> __Status__: ${fetchTimeLeft( p )
                             }`).join('\n\n');
                         }
                     else
@@ -322,7 +330,9 @@ module.exports = {
                     let substituteList;
                     if ( teamData.roster.substitute.length > 0 ) {
                         substituteList = teamData.roster.substitute.map( p => 
-                            `**⋅ ${interaction.guild.members.cache.get(p.id)?.user.username}\n(<@${p.id}>)**\n> Status: ${fetchTimeLeft( p )
+                        //     `**⋅ ${interaction.guild.members.cache.get(p.id)?.user.username}\n(<@${p.id}>)**\n> Status: ${fetchTimeLeft( p )
+                        // }`).join('\n\n');
+                            `**⋅** <@${p.id}>\n> Status: ${fetchTimeLeft( p )
                         }`).join('\n\n');
                     }
                     else

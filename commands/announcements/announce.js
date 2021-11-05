@@ -5,7 +5,7 @@ const { fetchTeamData, writeTeamData } = require('../../helper/teamData.js');
 const fs = require('fs');
 
 // id: 875550446629048370
-const PERM_FLAG = '🔏🛑 BOT AUTHOR ONLY: ';
+const PERM_FLAG = '🎴🔒 ADMIN ONLY: ';
 module.exports = {
     name: 'announce',
     description: 'Send an announcement out via DM or channel.',
@@ -83,56 +83,73 @@ module.exports = {
                 },
             ],
         },
+        {
+            name: 'quick',
+            type: dTypes.Subcommand,
+            description: PERM_FLAG + 'Send an announcement in the current channel.',
+            options: [
+                {
+                    name: 'announcement',
+                    description: 'Your announcement without a collector.',
+                    type: dTypes.String,
+                    required: false,
+                },
+            ],
+        },
     ],
     async execute( interaction ) {
         await interaction.deferReply({ ephemeral: true });
 
-        if ( interaction.user.id != process.env.OWNER_ID )
+        if ( !interaction.member.permissions.has( Permissions.FLAGS.ADMINISTRATOR ) )
             return interaction.editReply({ content: 'This user is not authorized to use this command.' });
         
         const colors = fetchServerData( interaction.guildId, 'colors' );
-        const route = interaction.options.getSubcommandGroup();
+        const route = interaction.options.getSubcommandGroup( false ) || interaction.options.getSubcommand();
         const routeTarget = interaction.options.getSubcommand();
         // const announcement = interaction.options.getString('announcement');
         const messageFilter = (msg) => msg.author.id === interaction.user.id;
+        let announcement = interaction.options.getString('announcement', false) || false;
         let user;
         let role;
         let team;
         let channel;
-        let announcement;
         let preview;
+        
+        const embed = new MessageEmbed()
+            .setColor( colors.neutral )
+            .setDescription( announcement || '' );
 
         if ( interaction.options.getUser('user')?.id === process.env.CLIENT_ID )
             return interaction.editReply({ content: 'You can\'t DM a robot, silly!' });
             
-        // collect announcement and parse
-        async function collect() {
-            return await interaction.channel.awaitMessages({ messageFilter, max: 1, time: 5 * 1000 });
-        }
-        await interaction.editReply({ content: '⚠️ Please send your announcement within 60 seconds.\nSend `cancel` to cancel.' });
+        // if no announcement, collect announcement and parse
+        if ( !announcement ) {
+
+            async function collect() {
+                return await interaction.channel.awaitMessages({ messageFilter, max: 1, time: 2 * 60 * 1000 });
+            }
+            await interaction.editReply({ content: '>>> ⚠️ Please send your announcement within 2 minutes.\nSend `cancel` to cancel.' });
+    
+            announcement = await collect();
+            if ( announcement.content?.length < 1 )
+                return await interaction.editReply({ content: 'Time\'s up! Please try again!\nTip: Write out your announcement first then copy-paste into this command!'});
+            announcement.first().delete().catch();
+            announcement = announcement.first().content;
+
+            // check if cancelled
+            if ( announcement.toLowerCase().trim() === 'cancel' )
+                return interaction.editReply({ content: '✅ Canceled!' });
+
+                
+            // set description and provide preview
+            embed.setDescription( announcement );
+            interaction.editReply({ content: 'Is this correct? `yes / no`', embeds: [ embed ] });
+            preview = await collect();
+            if ( preview.first().content.toLowerCase() !== 'yes' )
+                return interaction.editReply({ content: '✅ Canceled!' });
+            preview.first().delete().catch();
         
-        announcement = await collect();
-        if ( announcement.content.length < 1 )
-            return await interaction.editReply({ content: 'Time\'s up! Please try again!\nTip: Write out your announcement first then copy-paste into this command!'});
-        announcement.first().delete();
-        announcement = announcement.first().content;
-
-        // check if cancelled
-        if ( announcement.toLowerCase().trim() === 'cancel' )
-            return interaction.editReply({ content: '✅ Canceled!' });
-
-            
-        const embed = new MessageEmbed()
-            .setColor( colors.neutral )
-            .setDescription( announcement );
-
-        // provide preview
-        interaction.editReply({ content: 'Is this correct? `yes / no`', embeds: [ embed ] });
-        preview = await collect();
-        preview = preview.first().content;
-        if ( preview.toLowerCase() !== 'yes' )
-            return interaction.editReply({ content: '✅ Canceled!' });
-        preview.first().delete();
+        }
 
         // prep route
         switch ( route ) {
@@ -173,6 +190,9 @@ module.exports = {
                         await channel.send({ embeds: [ embed ] });
                         break;
                 }
+                break;
+            case 'quick':
+                await interaction.channel.send({ embeds: [ embed ] });
                 break;
         } // end switch
 
