@@ -7,9 +7,9 @@ const sensitiveBlacklist = new RegExp( input.slursSensitive );
 const politicalBlacklist = new Set( input.politics );
 
 console.log({
-    strict: strictBlacklist,
-    sensitive: sensitiveBlacklist,
-    political: politicalBlacklist,
+    strict: 'Size: ' + strictBlacklist.size,
+    sensitive: 'Size: ' + sensitiveBlacklist.toString().length,
+    political: 'Size: ' + politicalBlacklist.size,
 })
 
 /**
