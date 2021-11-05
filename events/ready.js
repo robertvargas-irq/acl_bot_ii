@@ -8,7 +8,7 @@ module.exports = {
         client.user.setPresence({
             activities: [
                 {
-                    name: `the league | ALPHA v0.0.1`,
+                    name: `the league | BETA v0.2.0`,
                     type: 'WATCHING',
                 },
             ],
@@ -16,8 +16,8 @@ module.exports = {
         });
     
         let welcomeMessage = client.user.tag + ' is now online!';
-        console.log('='.repeat(welcomeMessage.length));
-        console.log(client.user.tag + ' is now online!');
-        console.log('='.repeat(welcomeMessage.length));
+        console.log( '='.repeat( welcomeMessage.length ) );
+        console.log( welcomeMessage );
+        console.log( '='.repeat( welcomeMessage.length ) );
     },
 };
