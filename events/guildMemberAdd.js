@@ -33,19 +33,6 @@ const WELCOMES = [
     "The league is straight ahead!",
     "Watch out for the enemy team!"
 ];
-const FAREWELLS = [
-    "Sad to see you go.",
-    "Safe travels!",
-    "Have a safe flight!",
-    "Be safe!",
-    "We'll save a seat for ya!",
-    "Happy sightseeing!",
-    "Don't be afraid to visit!",
-    "Dont forget your coat!",
-    "Don't forget your shoes!",
-    "You've left some big shoes to fill!",
-    "We'll never forget ya!"
-];
 module.exports = {
     name: 'guildMemberAdd',
     async execute( member ) {
@@ -103,7 +90,8 @@ module.exports = {
             .setThumbnail( member.user.avatarURL({ format: 'png', size: 512 }) )
             // .setThumbnail( member.guild.iconURL({ format: 'png', size: 512 }) )
             // .setThumbnail( member.guild.members.cache.get( process.env.CLIENT_ID ).user.avatarURL({ format: 'png', size: 512 }) )
-            .setDescription(`Hey there <@${member.user.id}>, welcome to **${member.guild.name}**!\nWe are so happy to have you join us as **member #${memberCount}**!\n> __${welcomeMessage}__`)
+            .setDescription(`Hey there <@${member.user.id}>, welcome to **${member.guild.name}**!\nWe are so happy to have you join us as **member #${memberCount}**!\n> `
+                + `__[${welcomeMessage}](https://discord.com/channels/${member .guild.id}/${channels.roles})__`)
             .setTimestamp()
             .setFooter(`Irii © 2021`)
         channelObject.send({ embeds: [ welcomeEmbed ] });
