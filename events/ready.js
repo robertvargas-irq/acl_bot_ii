@@ -1,3 +1,5 @@
+const registerAppCommands = require("../register");
+
 /**
  * When Bot is online, set status and log to console
  */
@@ -5,6 +7,7 @@ module.exports = {
     name: 'ready',
     once: true,
     execute( client ) {
+        registerAppCommands(client);
         client.user.setPresence({
             activities: [
                 {
