@@ -20,7 +20,7 @@ module.exports = {
     async execute( message ) {
 
         // filter out bot
-        if ( message.author.id == process.env.CLIENT_ID )
+        if ( message.author.bot )
             return;
         
         // filter leetspeak
