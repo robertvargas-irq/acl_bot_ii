@@ -1,7 +1,7 @@
 # Independent Valorant League Discord Bot – "CLN-C"
 
 ## Brief overview
-This project is an updated version of the now-deprecated Independent Valorant eSports League Discord Bot for the Discord server and professional Valorant league by the name of `[Name Change Pending]`.
+This project is an updated version of the now-deprecated Independent Valorant eSports League Discord Bot for the Discord server and professional Valorant league by the name of `[NAME CHANGE PENDING]`.
 It contains user-friendly roster management features for teams, and a customizable news feed with role-pickers to choose which notifications you receive, administrative functions to set roster limits and send official announcements either through direct message or to the public server. Additionally, a database to store team information such as team ID, players (user IDs), roster, cosmetic options, and game data collected throughout the season.
 
 This program is written entirely in JavaScript, organized with Node Project Manager, and utilizing the NodeJS API.
