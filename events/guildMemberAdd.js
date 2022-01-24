@@ -89,7 +89,6 @@ module.exports = {
             // .setImage( member.guild.iconURL({ format: 'png', size: 512 }) )
             .setThumbnail( member.user.avatarURL({ format: 'png', size: 512 }) )
             // .setThumbnail( member.guild.iconURL({ format: 'png', size: 512 }) )
-            // .setThumbnail( member.guild.members.cache.get( process.env.CLIENT_ID ).user.avatarURL({ format: 'png', size: 512 }) )
             .setDescription(`Hey there <@${member.user.id}>, welcome to **${member.guild.name}**!\nWe are so happy to have you join us as **member #${memberCount}**!\n> `
                 + `__[${welcomeMessage}](https://discord.com/channels/${member .guild.id}/${channels.roles})__`)
             .setTimestamp()
