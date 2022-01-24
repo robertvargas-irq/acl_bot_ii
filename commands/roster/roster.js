@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType: dTypes } = require('discord-api-types/v9');
-const { MessageEmbed, Permissions, Message } = require('discord.js');
+const { MessageEmbed, Permissions, Message, Interaction } = require('discord.js');
 const { fetchServerData } = require('../../helper/serverData');
 const { fetchTeamData, writeTeamData } = require('../../helper/teamData');
 const MAX_MAIN = 5;
@@ -114,7 +114,7 @@ module.exports = {
             ],
         },
     ],
-    async execute( interaction ) {
+    async execute( /**@type {Interaction} */ interaction ) {
         await interaction.deferReply({ ephemeral: !interaction.options.getBoolean('display_public') });
 
         if ( interaction.user.id != process.env.OWNER_ID )
