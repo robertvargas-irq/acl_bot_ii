@@ -48,8 +48,4 @@ for ( const file of commandFiles ) {
     client.commands.set( command.name, command );
 }
 
-require('./register.js').start( client );
-
-
-
 client.login( process.env.TOKEN );
