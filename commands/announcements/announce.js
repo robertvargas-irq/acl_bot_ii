@@ -1,8 +1,7 @@
-const { ApplicationCommandOptionType: dTypes, ChannelType } = require('discord-api-types/v9');
-const { MessageEmbed, Permissions, Channel, Message } = require('discord.js');
+const { ApplicationCommandOptionType: dTypes } = require('discord-api-types/v9');
+const { MessageEmbed, Permissions, Interaction } = require('discord.js');
 const { fetchServerData } = require('../../helper/serverData.js');
-const { fetchTeamData, writeTeamData } = require('../../helper/teamData.js');
-const fs = require('fs');
+const { fetchTeamData } = require('../../helper/teamData.js');
 
 // id: 875550446629048370
 const PERM_FLAG = '🎴🔒 ADMIN ONLY: ';
@@ -97,6 +96,7 @@ module.exports = {
             ],
         },
     ],
+    /**@param {Interaction} interaction */
     async execute( interaction ) {
         await interaction.deferReply({ ephemeral: true });
 
@@ -119,7 +119,7 @@ module.exports = {
             .setColor( colors.neutral )
             .setDescription( announcement || '' );
 
-        if ( interaction.options.getUser('user')?.id === process.env.CLIENT_ID )
+        if ( interaction.options.getUser('user')?.id === interaction.client.user.id )
             return interaction.editReply({ content: 'You can\'t DM a robot, silly!' });
             
         // if no announcement, collect announcement and parse
