@@ -1,10 +1,15 @@
+const { Client } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const config = require('./config.json');
-const CLIENT_ID = process.env.CLIENT_ID;
 const guilds = config.registeredServers;
 
-async function start( client ) {
+/**
+ * Register application commands to the client.
+ * @param {Client} client 
+ */
+async function register( client ) {
+    
     const commands = client.commands.map( ({ execute, ...data }) => data );
     const rest = new REST({ version: '9' }).setToken( process.env.TOKEN );
 
@@ -20,7 +25,7 @@ async function start( client ) {
             );
             queue.push(
                 rest.put(
-                    Routes.applicationGuildCommands( CLIENT_ID, GUILD_ID ),
+                    Routes.applicationGuildCommands( client.application.id, GUILD_ID ),
                     { body: commands },
                 )
             );
@@ -36,4 +41,4 @@ async function start( client ) {
     });
 }
 
-module.exports = { start };
+module.exports = register;
