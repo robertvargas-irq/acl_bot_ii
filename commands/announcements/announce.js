@@ -164,7 +164,8 @@ module.exports = {
                         break;
                     case 'user':
                         user = interaction.options.getUser('user');
-                        embed.setTitle( user.username + ',\n' )
+                        embed
+                            .setTitle( user.username + ',\n' )
                             .setFooter(`Sent direct by: ${interaction.user.tag}`);
                         await user.send({ embeds: [ embed ] });
                         break;
