@@ -1,4 +1,4 @@
-# Independent Valorant League Discord Bot – "CLN-C"
+# Independent Valorant League Discord Bot – "NOVA"
 
 ## Brief overview
 This project is an updated version of the now-deprecated Independent Valorant eSports League Discord Bot for the Discord server and professional Valorant league by the name of `[NAME CHANGE PENDING]`.
