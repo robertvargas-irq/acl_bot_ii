@@ -108,7 +108,10 @@ module.exports = {
         const routeTarget = interaction.options.getSubcommand();
         // const announcement = interaction.options.getString('announcement');
         const messageFilter = (msg) => msg.author.id === interaction.user.id;
-        let announcement = interaction.options.getString('announcement', false) || false;
+        /**@type {string}*/let announcement = interaction.options.getString('announcement', false) || false;
+        let title = null;
+        let footer = null;
+        
         let user;
         let role;
         let team;
@@ -126,7 +129,7 @@ module.exports = {
         if ( !announcement ) {
 
             async function collect() {
-                return await interaction.channel.awaitMessages({ messageFilter, max: 1, time: 2 * 60 * 1000 });
+                return await interaction.channel.awaitMessages({ filter: messageFilter, max: 1, time: 2 * 60 * 1000 });
             }
             await interaction.editReply({ content: '>>> ⚠️ Please send your announcement within 2 minutes.\nSend `cancel` to cancel.' });
     
@@ -142,7 +145,8 @@ module.exports = {
 
                 
             // set description and provide preview
-            embed.setDescription( announcement );
+            parseMarkdown(announcement, embed);
+            // embed.setDescription( announcement );
             interaction.editReply({ content: 'Is this correct? `yes / no`', embeds: [ embed ] });
             preview = await collect();
             if ( preview.first().content.toLowerCase() !== 'yes' )
@@ -150,6 +154,8 @@ module.exports = {
             preview.first().delete().catch();
         
         }
+        else
+            parseMarkdown(announcement, embed);
 
         // prep route
         switch ( route ) {
@@ -186,7 +192,7 @@ module.exports = {
                         break;
                     case 'channel':
                         channel = interaction.options.getChannel('channel');
-                        title = interaction.options.getString('title');
+                        title = interaction.options.getString('title') || title;
                         if ( title ) embed.setTitle( title );
                         await channel.send({ embeds: [ embed ] });
                         break;
@@ -201,4 +207,26 @@ module.exports = {
         return;
 
     }
+}
+
+/**
+ * 
+ * @param {string} announcement 
+ * @param {MessageEmbed} embed 
+ */
+function parseMarkdown(announcement, embed) {
+    // replace markdown
+    let s_title = /\\t.*(\n){0,1}/g.exec(announcement) || null;
+    let s_footer = /\\f.*(\n){0,1}/g.exec(announcement) || null;
+    if (s_title || s_footer) {
+        if (s_title) {
+            embed.setTitle(s_title[0].substring(2, 256));
+            announcement = announcement.replace(s_title[0], "");
+        }
+        if (s_footer) {
+            announcement = announcement.replace(s_footer[0], "");
+            embed.setFooter({text: s_footer[0].substring(2, 256)});
+        }
+    }
+    if (announcement.length > 0) embed.setDescription(announcement);
 }
