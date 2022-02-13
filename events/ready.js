@@ -15,7 +15,7 @@ module.exports = {
                     type: 'WATCHING',
                 },
             ],
-            status: 'dnd'
+            status: 'online'
         });
     
         let welcomeMessage = client.user.tag + ' is now online!';
