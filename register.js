@@ -11,7 +11,7 @@ const guilds = config.registeredServers;
 async function register( client ) {
     
     const commands = client.commands.map( ({ execute, ...data }) => data );
-    const rest = new REST({ version: '9' }).setToken( process.env.TOKEN );
+    const rest = new REST({ version: '9' }).setToken( process.env.DISCORD_TOKEN );
 
     const queue = [];
     console.log('Started refreshing application (/) commands.');
