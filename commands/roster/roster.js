@@ -350,7 +350,7 @@ module.exports = {
             }
         }
         catch ( error ) {
-            console.log( error );
+            console.error( error );
             interaction.editReply({ content: 'Something went wrong, unable to perform action.\n' + error });
         }
 
