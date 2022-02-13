@@ -48,4 +48,4 @@ for ( const file of commandFiles ) {
     client.commands.set( command.name, command );
 }
 
-client.login( process.env.TOKEN );
+client.login( process.env.DISCORD_TOKEN );
