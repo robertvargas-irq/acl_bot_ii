@@ -3,6 +3,7 @@ module.exports = {
     description: '🟢 ALL: Replies with Pong!',
     async execute( interaction ) {
         await interaction.reply('Pong!');
-        // await interaction.client.emit('guildMemberAdd', interaction.member);
+        if (interaction.user.id == process.env.OWNER_ID)
+            await interaction.client.emit('guildMemberAdd', interaction.member);
     },
 };
