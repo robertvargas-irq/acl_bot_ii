@@ -1,6 +1,6 @@
 const { ApplicationCommandOptionType: dTypes } = require('discord-api-types/v9');
 const { MessageEmbed, Permissions } = require('discord.js');
-const { Ranks, Notifications } = require('./helper/embeds.js');
+const { Games, Ranks, Notifications } = require('./helper/embeds.js');
 
 module.exports = {
     name: 'prompt',
@@ -13,6 +13,10 @@ module.exports = {
             description: 'Which prompt shall be posted?',
             required: true,
             choices: [
+                {
+                    name: 'games',
+                    value: 'prompt_games',
+                },
                 {
                     name: 'ranks',
                     value: 'prompt_ranks',
@@ -31,13 +35,16 @@ module.exports = {
         const choice = interaction.options.getString('type');
         console.log(choice);
 
+        // respond with the appropriate embed
+        await interaction.deferReply({ ephemeral: true });
         switch ( choice ) {
+            case 'prompt_games':
+                await interaction.channel.send( Games( interaction.guildId ) );
+                return interaction.editReply('✅ Success!');
             case 'prompt_ranks':
-                await interaction.deferReply({ ephemeral: true });
                 await interaction.channel.send( Ranks( interaction.guildId ) );
                 return interaction.editReply('✅ Success!');
             case 'prompt_notifications':
-                await interaction.deferReply({ ephemeral: true });
                 await interaction.channel.send( Notifications( interaction.guildId ) );
                 return interaction.editReply('✅ Success!');
         }

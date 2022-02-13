@@ -16,6 +16,8 @@ module.exports = {
             const id = interaction.customId;
             console.log({ selectMenuId: interaction.customId, caller: interaction.user.tag })
             switch( id.slice( id.indexOf('_') + 1 ) ) {
+                case 'game':
+                    return game();
                 case 'rank':
                     return rank();
                 case 'notification':
@@ -33,6 +35,34 @@ module.exports = {
                 await interaction.editReply({ content: 'There was an error while executing this command!' });
             }
 
+        }
+
+        async function game() {
+            await interaction.deferReply({ ephemeral: true });
+            const [ games, colors ] = await Promise.all([
+                fetchServerData( interaction.guildId, '../roles/games' ),
+                fetchServerData( interaction.guildId, 'colors' )
+            ]);
+
+            // add new roles if applicable
+            if ( interaction.values.length > 0 ) {
+                await interaction.values.forEach( async r => {
+                    interaction.member.roles.add( interaction.guild.roles.cache.get( r ) );
+                    games.roleId.splice( games.roleId.indexOf(r), 1 );
+                });
+            }
+
+            // remove existing roles
+            games.roleId.forEach( async r => {
+                interaction.member.roles.remove( interaction.guild.roles.cache.get( r ) );
+            });
+
+            let embed = new MessageEmbed()
+                .setColor( colors.positive )
+                .setTitle('✅ Success!')
+                .setDescription(`You have successfully updated which games you would like to be a part of! See here for yourself: <@${interaction.user.id}>`);
+            interaction.editReply({ embeds: [ embed ] });
+            return;
         }
 
         async function rank() {

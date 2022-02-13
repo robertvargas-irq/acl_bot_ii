@@ -1,5 +1,41 @@
-const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageAttachment } = require("discord.js");
 const { fetchServerData } = require('../../../helper/serverData.js');
+
+function Games( serverId ) {
+    const colors = fetchServerData(serverId, 'colors');
+    const games = fetchServerData(serverId, '../roles/games');
+    const channels = fetchServerData(serverId, 'channels');
+    games.embed.description = games.embed.description.replace(/rules/g, `<#${channels.rules}>`);
+    const banner = new MessageAttachment(`servers/${serverId}/img/GameSelection.png`, 'GameSelection.png');
+    const embed = new MessageEmbed({...games.embed})
+        .setColor(colors.neutral)
+        .setImage('attachment://GameSelection.png');
+    
+    function populateSelectMenu() {
+        let components = [];
+        for (const game in games.names)
+            components.push({
+                label: games.names[game],
+                value: games.roleId[game],
+            });
+        return components;
+    }
+
+    const selectMenu = new MessageSelectMenu()
+        .setCustomId('global_game')
+        .setPlaceholder('Where would you like to belong?')
+        .setMinValues(0)
+        .setMaxValues(2)
+        .addOptions(populateSelectMenu())
+    const row = new MessageActionRow()
+        .addComponents(selectMenu);
+    
+    return {
+        embeds: [embed],
+        components: [row],
+        files: [banner]
+    }
+}
 
 function Ranks( serverId ) {
     const colors = fetchServerData( serverId, 'colors' );
@@ -73,4 +109,4 @@ function Notifications( serverId ) {
     }
 }
 
-module.exports = { Ranks, Notifications };
+module.exports = { Games, Ranks, Notifications };
