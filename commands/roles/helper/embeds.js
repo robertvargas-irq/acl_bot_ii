@@ -5,7 +5,9 @@ function Games( serverId ) {
     const colors = fetchServerData(serverId, 'colors');
     const games = fetchServerData(serverId, '../roles/games');
     const channels = fetchServerData(serverId, 'channels');
-    games.embed.description = games.embed.description.replace(/rules/g, `<#${channels.rules}>`);
+    games.embed.description = games.embed.description
+        .replace(/rules/g, `<#${channels.rules}>`)
+        .replace(/meet the staff/g, `<#${channels.meet_the_staff}>`);
     const banner = new MessageAttachment(`servers/${serverId}/img/GameSelection.png`, 'GameSelection.png');
     const embed = new MessageEmbed({...games.embed})
         .setColor(colors.neutral)

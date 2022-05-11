@@ -17,21 +17,20 @@ const WELCOME_TITLES = [
     "Välkommen!"
 ]
 const WELCOMES = [
-    "Stick around, and kick back!",
-    "Jump right on in!",
-    "We saved a spot just for you!",
-    "Don't just stand there, get chatting!",
-    "Hope you enjoy your stay!",
+    "Stick around, kick back, and grab your roles!",
+    "Jump right on in by choosing your roles!",
+    "We saved a spot just for you, now grab some roles!",
+    "Don't just stand there, roles are waiting for you!",
+    "Hope you enjoy your stay, and don't forget your roles!",
     "Don't forget your roles!",
-    "Leave your shoes at the door!",
-    "Prepare to set sail!",
-    "We'll lend you a hand with your luggage!",
-    "Your ticket checks out! Welcome aboard!",
-    "Take a tour!",
+    "Leave your shoes at the door, and go find your roles!",
+    "Grab your roles, and prepare to set sail!",
+    "We'll lend you a hand with your luggage, you go focus on roles!",
+    "Your ticket checks out! Welcome aboard, let me show you the roles!",
+    "Take a tour, and choose your roles!",
     "Check out the roles on your way in!",
-    "Watch your head as you enter!",
-    "The league is straight ahead!",
-    "Watch out for the enemy team!"
+    "Watch your head as you enter, and check out the server roles!",
+    "The league is straight ahead, best to check out the server roles!"
 ];
 module.exports = {
     name: 'guildMemberAdd',
